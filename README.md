@@ -1,0 +1,2 @@
+# seg-botnet
+!!! for Educational !!!
