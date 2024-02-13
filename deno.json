@@ -4,5 +4,11 @@
         "dev": "deno run -A --unstable --watch index.ts",
         "test": "deno test -A --unstable"
     },
-    "importMap": "./imports-map.json"
+    "importMap": "./imports-map.json",
+    "fmt": {
+        "options": {
+            "singleQuote": false,
+            "indentWidth": 4
+        }
+    }
 }

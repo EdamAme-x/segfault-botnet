@@ -1,7 +1,14 @@
-import { createSecret } from "./createSecret/index.ts";
 import { Prompt } from "./prompt/index.ts";
+import { InfectionsRunner } from './runner/infections/index.ts';
 
 Prompt.showTitle();
 
-const mode = Prompt.showOptions()
-console.log(await createSecret())
+const mode = Prompt.showOptions();
+
+switch (mode) {
+    case "infections":
+        new InfectionsRunner().run();
+        break;
+    case "operation":
+        break;
+}
