@@ -6,3 +6,5 @@
 - unlimited thread
 
 - https://shell.segfault.net
+
+無断使用禁止
