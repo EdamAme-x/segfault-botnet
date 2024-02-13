@@ -12,7 +12,7 @@ export class BotNetDataBase {
         }
     };
 
-    public pushSecret = async (secret: string, ip: string, envSecret: string) => {
+    public pushSecret = async (secret: string, ip: string[], envSecret: string) => {
         await this.checkAlreadySetup();
         this.kv?.set(["secrets", secret], {
             ip: ip,
@@ -51,15 +51,19 @@ export class BotNetDataBase {
         const stackArray = [];
         
         for await (const item of list) {
-            stackArray.push(item.value as { ip: string, envSecret: string });
+            stackArray.push(item.value as { ip: string[], envSecret: string });
         }
     
         const maps = new Set();
 
         for (const item of stackArray) {
-            maps.add(item.ip);
+            const ips = item.ip;
+
+            for (const ip of ips) {
+                maps.add(ip);
+            }
         }
 
-        return maps.size
+        return maps.size * 3
     }
 }

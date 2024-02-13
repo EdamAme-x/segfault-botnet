@@ -1,4 +1,4 @@
 export type Config = {
-    ip: string,
+    ip: string[],
     envSecret: string
 } | null

@@ -76,12 +76,12 @@ export class CheckConfig {
         return new TextDecoder().decode(buffer);
     }
 
-    static ipParser(text: string): string | null {
+    static ipParser(text: string): string[] | null {
         const ip = text.match(/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/g);
 
         if (ip) {
             if (ip.length >= 2) {
-                return ip[1];
+                return ip;
             }
         }
         return null;
