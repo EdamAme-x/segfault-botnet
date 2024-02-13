@@ -31,16 +31,29 @@ export class CheckConfig {
 
     private setup(): Promise<Config> {
         return new Promise((resolve) => {
+            let isWaiting = false;
             this.ws.onmessage = (e: MessageEvent) => {
                 const text = this.bufferToText(e.data);
                 if (text.includes("SEGFAULT")) {
                     resolve(this.activate());
+                }else if (text.includes("Waiting for")) {
+                    isWaiting = true;
                 }
             };
             this.ws.onclose = () => resolve(null);
             this.ws.send(`4{"secret":"${this.secret}"}`);
             this.ws.send(`1{"cols":79,"rows":34}`);
-            setTimeout(() => resolve(null), 30000);
+            setTimeout(() => {
+                if (!isWaiting) {
+                    resolve(null);
+                }
+            }, 30000);
+            setTimeout(() => {
+                if (!isWaiting) {
+                    resolve(null);
+                }
+            }, 60000);
+            setTimeout(() => resolve(null), 90000);
         });
     }
 
@@ -50,6 +63,7 @@ export class CheckConfig {
             const result: any = {};
             this.ws.onmessage = (e: MessageEvent) => {
                 const text = this.bufferToText(e.data);
+                console.log(text);
                 if (text.includes("#reconnect")) {
                     console.log("\x1b[33m[!]\x1b[0m Reconnecting...");
                     this.ws.send("y\n");
