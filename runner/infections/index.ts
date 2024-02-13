@@ -40,7 +40,7 @@ export class InfectionsRunner {
             return
         }
 
-        const threads = Array.from({ length: 1 }).map(() => onThread());
+        const threads = Array.from({ length: 2 }).map(() => onThread());
 
         Promise.all(threads);
     }
