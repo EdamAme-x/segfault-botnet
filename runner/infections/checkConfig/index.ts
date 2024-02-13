@@ -50,6 +50,13 @@ export class CheckConfig {
             const result: any = {};
             this.ws.onmessage = (e: MessageEvent) => {
                 const text = this.bufferToText(e.data);
+                if (text.includes("#reconnect")) {
+                    console.log("\x1b[33m[!]\x1b[0m Reconnecting...");
+                    this.ws.send("y\n");
+                    this.activate().then(resolve);
+                    return
+                }
+
                 if (text.includes("SECRET=")) {
                     const envSecret = CheckConfig.envParser(text)
 

