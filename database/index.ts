@@ -64,6 +64,6 @@ export class BotNetDataBase {
             }
         }
 
-        return maps.size * 3
+        return maps.size
     }
 }

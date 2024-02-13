@@ -59,6 +59,7 @@ switch (mode) {
 
         break
     case "operation":
+        console.log("\x1b[32m[~] WIP\x1b[0m\n");
         break;
     default:
         break;

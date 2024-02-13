@@ -81,6 +81,7 @@ export class CheckConfig {
 
         if (ip) {
             if (ip.length >= 2) {
+                ip.shift();
                 return ip;
             }
         }
