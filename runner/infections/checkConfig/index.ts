@@ -39,6 +39,9 @@ export class CheckConfig {
                 }else if (text.includes("Waiting for")) {
                     console.log("\x1b[33m[!]\x1b[0m Waiting for resources...");
                     isWaiting = true;
+                }else if (text.includes("already have")) {
+                    console.log("\x1b[33m[!]\x1b[0m IP Banned");
+                    isWaiting = true;
                 }
             };
             this.ws.onclose = () => resolve(null);
