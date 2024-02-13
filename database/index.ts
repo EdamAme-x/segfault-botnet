@@ -1,3 +1,3 @@
-export class BotNetDataBase {
+export const BotNetDataBase = {
 
-}
+} as const;
