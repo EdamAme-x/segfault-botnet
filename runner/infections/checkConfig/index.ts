@@ -37,6 +37,7 @@ export class CheckConfig {
                 if (text.includes("SEGFAULT")) {
                     resolve(this.activate());
                 }else if (text.includes("Waiting for")) {
+                    console.log("\x1b[33m[!]\x1b[0m Waiting for resources...");
                     isWaiting = true;
                 }
             };
@@ -53,7 +54,7 @@ export class CheckConfig {
                     resolve(null);
                 }
             }, 60000);
-            setTimeout(() => resolve(null), 90000);
+            setTimeout(() => resolve(null), 180000);
         });
     }
 
@@ -63,10 +64,16 @@ export class CheckConfig {
             const result: any = {};
             this.ws.onmessage = (e: MessageEvent) => {
                 const text = this.bufferToText(e.data);
-                console.log(text);
-                if (text.includes("#reconnect")) {
+                if (text.includes("already have")) {
                     console.log("\x1b[33m[!]\x1b[0m Reconnecting...");
-                    this.ws.send("y\n");
+                    this.ws.onmessage = (e: MessageEvent) => {
+                        const text = this.bufferToText(e.data);
+                        if (text.includes("y/N")) {
+                            this.ws.send("0y");
+                            console.log("\x1b[32m[+]\x1b[0m Reconnect");
+                            resolve(this.activate());
+                        }
+                    }
                     this.activate().then(resolve);
                     return
                 }
