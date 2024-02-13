@@ -1,8 +1,8 @@
 {
     "tasks": {
-        "start": "deno run -A --unstable index.ts",
-        "dev": "deno run -A --unstable --watch index.ts",
-        "test": "deno test -A --unstable"
+        "start": "deno run -A --unstable-kv index.ts",
+        "dev": "deno run -A --unstable-kv --watch index.ts",
+        "test": "deno test -A --unstable-kv"
     },
     "importMap": "./imports-map.json",
     "fmt": {

