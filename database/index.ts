@@ -58,6 +58,7 @@ export class BotNetDataBase {
 
         for (const item of stackArray) {
             const ips = item.ip;
+            console.log(ips);
 
             for (const ip of ips) {
                 maps.add(ip);

