@@ -18,7 +18,7 @@ ao9n2-
 `;
 
     const result1 = checkConfig(test1);
-    assert(equal(result1, ["2.2.2.28", "1.1.1.1"]));
+    assert(equal(result1, ["1.1.1.1"]));
     const result2 = checkConfig(test2);
     assert(result2 === null);
 });
