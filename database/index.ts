@@ -37,4 +37,29 @@ export class BotNetDataBase {
         }
         return stackArray.length
     }
+
+    public quantityIP = async (): Promise<number> => {
+        await this.checkAlreadySetup();
+        const list = await this.kv?.list({
+            prefix: ["secrets"],
+        });
+
+        if (!list) {
+            return 0;
+        }
+
+        const stackArray = [];
+        
+        for await (const item of list) {
+            stackArray.push(item.value as { ip: string, envSecret: string });
+        }
+    
+        const maps = new Set();
+
+        for (const item of stackArray) {
+            maps.add(item.ip);
+        }
+
+        return maps.size
+    }
 }

