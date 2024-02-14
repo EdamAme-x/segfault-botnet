@@ -2,7 +2,7 @@ import { WebSocket } from "npm:ws"
 import { Config } from "../../../types/global.d.ts";
 
 export class CheckConfig {
-    private ws: WebSocket;
+    public ws: WebSocket;
     constructor(
         private secret: string,
     ) {

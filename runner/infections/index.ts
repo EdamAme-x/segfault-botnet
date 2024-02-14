@@ -6,7 +6,10 @@ import { BotNetDataBase } from './../../database/index.ts';
 export class InfectionsRunner {
     private createSecret = createSecret;
     private async checkConfig(secret: string): Promise<Config> {
-        return await new CheckConfig(secret).run();
+        const configRunner = await new CheckConfig(secret);
+        const result = await configRunner.run();
+        configRunner.ws.close();
+        return result;
     }
     private async wait(ms: number) {
         return await new Promise((resolve) => setTimeout(resolve, ms));
