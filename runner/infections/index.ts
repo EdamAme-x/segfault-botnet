@@ -9,6 +9,7 @@ export class InfectionsRunner {
         const configRunner = await new CheckConfig(secret);
         const result = await configRunner.run();
         configRunner.ws.close();
+        console.log("\x1b[32m[+]\x1b[0m Socket closed");
         return result;
     }
     private async wait(ms: number) {

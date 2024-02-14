@@ -1,6 +1,7 @@
 import { BotNetDataBase } from "./database/index.ts";
 import { Prompt } from "./prompt/index.ts";
 import { InfectionsRunner } from './runner/infections/index.ts';
+import { Operation } from "./runner/operation/index.ts";
 
 Prompt.showTitle();
 
@@ -69,8 +70,11 @@ switch (mode) {
         console.log(`\x1b[32m[+]\x1b[0m Current have botnets: ${await kv.quantity()}`);
         console.log(`\x1b[32m[+]\x1b[0m Current have botnets IP: ${await kv.quantityIP()}`);
         break;
+    // deno-lint-ignore no-case-declarations
     case "operation":
-        console.log("\x1b[32m[~] WIP\x1b[0m\n");
+        const operation = new Operation();
+        await operation.setup();
+        await operation.run();
         break;
     default:
         break;

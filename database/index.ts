@@ -51,13 +51,13 @@ export class BotNetDataBase {
         const stackArray = [];
         
         for await (const item of list) {
-            stackArray.push(item.value as { ip: string[], envSecret: string });
+            stackArray.push((item.value as { ip: string[], envSecret: string }).ip);
         }
-    
+
         const maps = new Set();
 
         for (const item of stackArray) {
-            const ips = item.ip;
+            const ips = item;
 
             for (const ip of ips) {
                 maps.add(ip);
